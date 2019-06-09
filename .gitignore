@@ -25,3 +25,8 @@ demo/report/report.html
 demo/report/stats.json
 src/platforms/android/nativescript_clevertap.aar
 publish/package-lock.json
+
+# Generated typings by NS
+demo/metadata-arm64
+demo/metadata-armv7
+demo/typings

@@ -31,7 +31,7 @@
 		"demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
 		"plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-clevertap && tns plugin add ../src",
 		"generate.typings.ios": "cd ../demo && TNS_DEBUG_METADATA_PATH=\"$(pwd)/metadata\" tns build ios --for-device && TNS_TYPESCRIPT_DECLARATIONS_PATH=\"$(pwd)/typings\" tns build ios --for-device && echo 'Now look for your library typings in demo/typings!'",
-		"generate.typings.android": "echo 'Make sure you have the android-dts-generator in your workspace folder!' && java -jar ../../android-dts-generator/dts-generator/build/libs/dts-generator.jar -input ./platforms/android/clevertap-android-3.3.0.jar -output platforms/android/typings",
+		"generate.typings.android": "echo 'Make sure you have the android-dts-generator in your workspace folder!' && java -jar ../../android-dts-generator/dts-generator/build/libs/dts-generator.jar -input ./platforms/android-libs/clevertap-android-3.3.0.jar -output platforms/android/typings",
 		"demo.clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i",
 		"plugin.clean": "npx rimraf -- node_modules package-lock.json && npm i",
 		"ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**'",

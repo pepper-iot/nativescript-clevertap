@@ -1,69 +1,70 @@
 {
-    "name": "nativescript-clevertap",
-    "version": "0.2.3",
-    "description": "Clevertap Nativescript Plugin.",
-    "main": "clevertap",
-    "typings": "index.d.ts",
-    "nativescript": {
-        "platforms": {
-            "android": "4.0.0",
-            "ios": "4.0.0"
-        },
-        "hooks": [
-            {
-              "type": "after-prepare",
-              "script": "scripts/extension-after-prepare.js",
-              "inject": true
-            }
-          ]
-    },
-    "scripts": {
-        "postinstall": "node postinstall-hooks.js",
-        "preuninstall": "node preuninstall-hooks.js",
-        "tsc": "tsc",
-        "build": "npm run tsc && npm run build.native",
-        "build.native": "node scripts/build-native.js",
-        "postclone": "npm i && node scripts/postclone.js && cd ../demo && npm i && npx rimraf -- package-lock.json && cd ../src",
-        "test.android": "npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
-        "test.ios": "npm run tsc && npm run tslint && cd ../demo && tns build ios && tns test ios --justlaunch",
-        "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\"",
-        "plugin.tscwatch": "npm run tsc -- -w",
-        "demo.ios": "npm run tsc && cd ../demo && tns run ios --syncAllFiles --emulator",
-        "demo.prepare-ios": "npm run tsc && cd ../demo && tns prepare ios",
-        "demo.android": "npm run tsc && cd ../demo && tns run android --syncAllFiles --emulator",
-        "demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
-        "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-clevertap && tns plugin add ../src",
-        "clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i",
-        "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**'",
-        "prepack": "npm run build.native"
-    },
-    "keywords": [
-        "NativeScript",
-        "JavaScript",
-        "Android",
-        "iOS"
-    ],
-    "author": {
-        "name": "WebileApps",
-        "email": "github@webileapps.com"
-    },
-    "bugs": {
-        "url": "https://github.com/WebileApps/nativescript-clevertap/issues"
-    },
-    "license": "Apache-2.0",
-    "homepage": "https://github.com/WebileApps/nativescript-clevertap",
-    "readmeFilename": "README.md",
-    "devDependencies": {
-        "tns-core-modules": "^4.2.0",
-        "tns-platform-declarations": "^4.2.0",
-        "typescript": "~2.8.2",
-        "prompt": "^1.0.0",
-        "rimraf": "^2.6.2",
-        "tslint": "^5.11.0",
-        "semver": "^5.5.0"
-    },
-    "bootstrapper": "nativescript-plugin-seed",
-    "dependencies": {
-        "nativescript-hook": "^0.2.4"
-    }
+	"name": "nativescript-clevertap",
+	"version": "0.2.3",
+	"description": "Clevertap Nativescript Plugin.",
+	"main": "clevertap",
+	"typings": "index.d.ts",
+	"nativescript": {
+		"platforms": {
+			"android": "5.1.0",
+			"ios": "5.1.0"
+		},
+		"hooks": [
+			{
+				"type": "after-prepare",
+				"script": "scripts/extension-after-prepare.js",
+				"inject": true
+			}
+		]
+	},
+	"scripts": {
+		"tsc": "tsc",
+		"build": "npm run tsc && npm run build.native",
+		"build.native": "node scripts/build-native.js",
+		"test.android": "npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
+		"test.ios": "npm run tsc && npm run tslint && cd ../demo && tns build ios && tns test ios --justlaunch",
+		"tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\"",
+		"plugin.tscwatch": "npm run tsc -- -w",
+		"demo.ios": "npm run tsc && cd ../demo && tns run ios --syncAllFiles --emulator",
+		"demo.prepare-ios": "npm run tsc && cd ../demo && tns prepare ios",
+		"demo.android": "npm run tsc && cd ../demo && tns run android --syncAllFiles --emulator",
+		"demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
+		"plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-clevertap && tns plugin add ../src",
+		"generate.typings.ios": "cd ../demo && TNS_DEBUG_METADATA_PATH=\"$(pwd)/metadata\" tns build ios --for-device && TNS_TYPESCRIPT_DECLARATIONS_PATH=\"$(pwd)/typings\" tns build ios --for-device && echo 'Now look for your library typings in demo/typings!'",
+		"generate.typings.android": "echo 'Make sure you have the android-dts-generator in your workspace folder!' && java -jar ../../android-dts-generator/dts-generator/build/libs/dts-generator.jar -input ./platforms/android/clevertap-android-3.3.0.jar -output platforms/android/typings",
+		"demo.clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i",
+		"plugin.clean": "npx rimraf -- node_modules package-lock.json && npm i",
+		"ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**'",
+		"prepack": "npm run build",
+		"publish-package": "npm version patch && cd ../publish && ./publish.sh"
+	},
+	"keywords": [
+		"NativeScript",
+		"JavaScript",
+		"Android",
+		"iOS"
+	],
+	"author": {
+		"name": "WebileApps",
+		"email": "github@webileapps.com"
+	},
+	"bugs": {
+		"url": "https://github.com/pepper-iot/nativescript-clevertap/issues"
+	},
+	"license": "Apache-2.0",
+	"homepage": "https://github.com/pepper-iot/nativescript-clevertap",
+	"readmeFilename": "README.md",
+	"devDependencies": {
+		"tns-core-modules": "^5.1.0",
+		"tns-platform-declarations": "^5.1.0",
+		"typescript": "~3.3.3",
+		"prompt": "^1.0.0",
+		"rimraf": "^2.6.3",
+		"tslint": "^5.12.1",
+		"semver": "^5.6.0"
+	},
+	"bootstrapper": "nativescript-plugin-seed",
+	"dependencies": {
+		"nativescript-hook": "^0.2.5"
+	}
 }

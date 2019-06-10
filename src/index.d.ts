@@ -1,23 +1,41 @@
 export interface CleverTap {
-  register();
-  
-  updateProfile(profile);
 
-  pushEvent(event: string, eventMeta : any);
+   setDebugLevel(level: number): void;
 
-  pushChargedEvent(chargeDetails : any, items : any[]);
+   changeCredentials(accountId: string, token: string): void;
 
-  onUserLogin(profile);
+   updateProfile(profile: any): void;
 
-  profileGetProperty(propertyName : string);
+   pushEvent(eventKey: string, eventMeta: any): void;
 
-  setLocation(): Promise<void>;
+   pushChargedEvent(chargeDetails: any, items: any[]): void;
 
-  pushFcmRegistrationId(fcmRegId);
+   onUserLogin(profile: any): void;
 
-  handleMessage(message): boolean;
+   profileGetProperty(propertyName: string): any;
 
-  createNotificationChannel({ channelId, name, description, importance, showBadge });
+	/**
+	 * Android only
+	 */
+   register(): void;
+
+	/**
+	 * Android only
+	 * @param fcmRegId
+	 */
+   pushFcmRegistrationId(fcmRegId: string): void;
+
+	/**
+	 * Android only
+	 * @param message
+	 */
+   handleMessage(message: any): boolean;
+
+	/**
+	 * Android only
+	 * @param param0
+	 */
+   createNotificationChannel({ channelId, name, description, importance, showBadge }): void;
 }
 
 export const cleverTap: CleverTap;

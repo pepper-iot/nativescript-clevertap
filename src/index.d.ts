@@ -14,6 +14,24 @@ export interface CleverTap {
 
    profileGetProperty(propertyName: string): any;
 
+   /**
+    * iOS only
+    * @param deviceToken
+    */
+   setPushToken(deviceToken: any): void;
+
+   /**
+    * iOS only
+    * @param deviceToken
+    */
+   setPushTokenAsString(deviceToken: string): void;
+
+   /**
+    * iOS only
+    * @param deviceToken
+    */
+   handleNotificationWithData(data: any): void;
+
 	/**
 	 * Android only
 	 */

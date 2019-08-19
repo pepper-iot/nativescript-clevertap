@@ -13,6 +13,8 @@ export class CleverTapImpl extends Common implements CleverTapInterface {
 
    public changeCredentials(accountId: string, token: string): void {
       CleverTap.changeCredentialsWithAccountIDAndToken(accountId, token);
+      // Temp: Try autointegrating after we change credentials
+      CleverTap.autoIntegrate();
    }
 
    public updateProfile(profile: any): void {
@@ -36,6 +38,18 @@ export class CleverTapImpl extends Common implements CleverTapInterface {
 
    public profileGetProperty(propertyName: string): any {
       return CleverTap.sharedInstance().profileGet(propertyName);
+   }
+   
+   public setPushToken(deviceToken: NSData): void {
+      CleverTap.sharedInstance().setPushToken(deviceToken);
+   }
+   
+   public setPushTokenAsString(deviceToken: string): void {
+      CleverTap.sharedInstance().setPushTokenAsString(deviceToken);
+   }
+   
+   public handleNotificationWithData(data: any): void {
+      CleverTap.sharedInstance().handleNotificationWithData(data);
    }
 
 

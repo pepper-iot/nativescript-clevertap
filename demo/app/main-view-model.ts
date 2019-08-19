@@ -5,11 +5,6 @@ export class HelloWorldModel extends Observable {
 	public message: string;
 	public userId: string;
 
-	constructor() {
-		super();
-		this.onGetUserIdTapped();
-	}
-
 	onLoginTapped() {
 		cleverTap.onUserLogin({
 			Name: "Harsha Nutal",

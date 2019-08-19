@@ -1,6 +1,6 @@
 {
 	"name": "nativescript-clevertap",
-	"version": "1.0.1",
+	"version": "1.0.3",
 	"description": "Clevertap Nativescript Plugin.",
 	"main": "clevertap",
 	"typings": "index.d.ts",

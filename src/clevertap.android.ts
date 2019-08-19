@@ -86,6 +86,15 @@ export class CleverTap extends Common implements CleverTapInterface {
       }
       return false;
    }
+   
+   /**
+    * iOS only methods below
+    */
+   public setPushToken(deviceToken: any): void { }
+   
+   public setPushTokenAsString(deviceToken: string): void { }
+   
+   public handleNotificationWithData(data: any): void { }
 }
 
 export const cleverTap = new CleverTap();

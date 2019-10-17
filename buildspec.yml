@@ -1,0 +1,68 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      ## CHANGE REPO NAME PER PLUGIN
+      - NATIVESCRIPT_VERSION=5.4.2
+      - REPO_NAME=nativescript-clevertap
+      - REPO_BRANCH=master
+
+      - REPO_URL=ssh://git-codecommit.us-east-2.amazonaws.com/v1/repos/$REPO_NAME
+
+      - echo $NATIVESCRIPT_VERSION
+      - echo $REPO_NAME
+      - echo $REPO_BRANCH
+      - echo $REPO_URL
+      # Pull ssh keys for cicd user of codecommit
+      - apt-get update
+      - apt-get --assume-yes install openssh-client
+      - aws s3 sync s3://pepper-dev-build-credentials ~/.ssh/ --region us-east-2
+      - ssh-keyscan -t rsa git-codecommit.us-east-2.amazonaws.com >> ~/.ssh/known_hosts
+      - chmod 500 ~/.ssh/*_rsa
+      - npm config set unsafe-perm true
+      - npm config set strict-ssl false
+
+      - git clone --single-branch --branch $REPO_BRANCH $REPO_URL
+
+  build:
+    commands:
+      # Get the last comment on the branch to see if it was a tag, if so ignore the commit
+      - cd $REPO_NAME/src
+      - LAST_COMMIT_AUTHOR=$(git log -1 --pretty=format:'%an')
+      - echo $LAST_COMMIT_AUTHOR
+      - echo "1"
+      - |- # Test multiline yaml support
+        if [ "$LAST_COMMIT_AUTHOR" = "dev2" ]; then
+          echo 'EXITING BUILD last commit was by dev2'
+        else
+          echo 'CONTINUE BUILD'
+          echo 'FORCING REBUILD'
+          npm install -g nativescript@$NATIVESCRIPT_VERSION
+
+          npm i
+
+          # npm version patch won't commit and tag without a .git directory https://github.com/npm/npm/issues/9111
+          # due to package.json not being in the root git project we need a workaround.
+          mkdir .git
+
+          # Login to git
+          npm install -g npm-login-cmd
+          npm set registry https://registry.pepperos.io
+          npx npm-login-cmd
+
+          # Git requires global details
+          git config user.name "dev2"
+          git config user.email "dev2@pepper.me"
+
+          # Version the package.json, commit and push the tag
+          TAG_VERSION=$(npm version patch)
+          TAG_VERSION=$(echo $TAG_VERSION | cut -c 2-)
+          echo $TAG_VERSION
+          git push
+          git push --tags
+
+          ## Perform build
+          cd ../publish && ./publish.sh
+        fi
